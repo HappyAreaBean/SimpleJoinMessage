@@ -1,0 +1,163 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'kr.entree.spigradle' version '2.4.2'
+    id 'java'
+}
+
+group 'cc.happyareabean'
+version '1.0.0'
+
+sourceCompatibility = JavaLanguageVersion.of(17)
+targetCompatibility = JavaLanguageVersion.of(17)
+
+compileJava.options.encoding = 'UTF-8'
+
+archivesBaseName = rootProject.name
+
+def libsPackage = group + ".sjm.libs."
+
+repositories {
+    mavenCentral()
+
+    //Added spigot repository
+    maven {
+        name = 'Spigot'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+
+    //Added md5's repository to add the missing BungeeCord-Chat api
+    maven {
+        name = 'BungeeCord-Chat'
+        url = 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+
+    maven {
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+
+    //Add your repositories here
+    mavenLocal()
+}
+
+ext {
+    //Define one of the supported mc versions
+    mcVersion = '1.18.2'
+}
+
+dependencies {
+    //Adds the spigot api to your plugin
+    compileOnly "org.spigotmc:spigot-api:${mcVersion}-R0.1-SNAPSHOT"
+
+    //Add your dependencies here
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    compileOnly 'me.clip:placeholderapi:2.11.1'
+
+    implementation "net.kyori:adventure-text-minimessage:4.11.0"
+    implementation "net.kyori:adventure-platform-bukkit:4.1.0"
+
+    implementation("de.exlll:configlib-core:2.2.1") {
+        exclude group: 'org.yaml', module: 'snakeyaml'
+    }
+
+}
+
+shadowJar {
+    setClassifier('')
+    relocate 'net.kyori', libsPackage + "kyori"
+    relocate 'de.exlll', libsPackage + "configlib"
+}
+
+spigot {
+    // The 'name' and 'version' will be set to project.version and project.name,
+    // But we may set those manually.
+    apiVersion '1.18'
+    excludeLibraries = ['configlib-core']
+    softDepends 'PlaceholderAPI'
+    commands {
+        simplejoinmessage {
+            aliases = ['sjm']
+            description = 'SimpleJoinMessage command'
+            permission = 'sjm.admin'
+            usage = '/<command> [about|reload]'
+        }
+    }
+    permissions {
+        'sjm.admin' {
+            description = 'Allows to use SimpleJoinMessage commands.'
+            defaults = 'op'
+        }
+    }
+}
+
+processResources {
+    project.properties.put("version", this.version)
+    expand project.properties
+}
+
+task cleanPlugin() {
+    group 'deploy'
+    description 'Cleans the plugin in the working directory up'
+
+    try {
+        delete 'working/plugins/' + rootProject.name + '-' + project.version.toString() + '.jar'
+    } catch (ignored) {
+
+    }
+}
+
+task deploy(type: Copy, dependsOn: ['cleanPlugin', 'jar']) {
+    group 'deploy'
+    description 'Exports you plugin to the plugin directory in your test server'
+
+    from shadowJar
+    into 'working/plugins'
+}
+
+task setupServer {
+    group 'server'
+    description 'Downloads the server jar'
+
+    def server = new File('working/server.jar')
+
+    if (server.exists()) {
+        return
+    }
+
+    def url = ''
+    switch (mcVersion) {
+        case '1.8.8':
+            url = 'https://cdn.getbukkit.org/spigot/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar'
+            break
+
+        case '1.12.2':
+            url = 'https://cdn.getbukkit.org/spigot/spigot-1.12.2.jar'
+            break
+
+        case '1.13.2':
+            url = 'https://cdn.getbukkit.org/spigot/spigot-1.13.2.jar'
+            break
+
+        case '1.14.4':
+            url = 'https://cdn.getbukkit.org/spigot/spigot-1.14.4.jar'
+            break
+
+        case '1.18.2':
+            url = 'https://cdn.getbukkit.org/spigot/spigot-1.18.2.jar'
+            break
+
+        case '1.19':
+            url = 'https://cdn.getbukkit.org/spigot/spigot-1.19.jar'
+            break
+    }
+
+    if (url.isEmpty()) {
+        throw new GradleException('NOT A SUPPORTED VERSION, PLEASE USE [1.8.8, 1.12.2, 1.13.2]!')
+    }
+
+    new URL(url).withInputStream { i -> server.withOutputStream { it << i } }
+}

@@ -1,0 +1,70 @@
+package cc.happyareabean.sjm.config;
+
+import de.exlll.configlib.annotation.Comment;
+import de.exlll.configlib.configs.yaml.YamlConfiguration;
+import de.exlll.configlib.format.FieldNameFormatters;
+import lombok.Getter;
+
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
+
+@Getter
+@SuppressWarnings("FieldMayBeFinal")
+public class SJMConfig extends YamlConfiguration {
+
+	@Comment({
+			"The message to be send when player join the server",
+			" ",
+			"Placeholders available:",
+			"   <player> - Player name",
+	})
+	private List<String> joinMessage = Arrays.asList(
+			"",
+			"<b>Hello <color:#3cff00>%player_name%</color>! Welcome to <color:#00d9ff>My Server</color>!</b>",
+			"Currently have <yellow>%server_online%</yellow> players online! <b><color:#54585c>|</color></b> Time: <color:#ffac05>%server_time_dd/MM/yyyy hh:mm:ss%</color>",
+			"",
+			"<b><color:#5865f2><click:open_url:'https://go.happyareabean.cc/supportdiscord'>[Click here to join our Discord server]</click></color></b>",
+			"<b><color:#d45b71><click:open_url:'https://go.happyareabean.cc/sjm'>[Download SimpleJoinMessage]</click></color></b>",
+			""
+	);
+
+	@Comment({
+			"Whether the message should be delayed? (In ticks)",
+			"Change it to 0 to disable delay."
+	})
+	private int delayTicks = 20;
+
+	public SJMConfig(Path path) {
+		super(path, YamlProperties.builder()
+				.setFormatter(FieldNameFormatters.IDENTITY)
+				.setPrependedComments(Arrays.asList(
+						"------------------------------------------------------------------------",
+						" ",
+						"   _____ _                 _           _       _       __  __                                ",
+						"  / ____(_)               | |         | |     (_)     |  \\/  |                               ",
+						" | (___  _ _ __ ___  _ __ | | ___     | | ___  _ _ __ | \\  / | ___  ___ ___  __ _  __ _  ___ ",
+						"  \\___ \\| | '_ ` _ \\| '_ \\| |/ _ \\_   | |/ _ \\| | '_ \\| |\\/| |/ _ \\/ __/ __|/ _` |/ _` |/ _ \\",
+						"  ____) | | | | | | | |_) | |  __/ |__| | (_) | | | | | |  | |  __/\\__ \\__ \\ (_| | (_| |  __/",
+						" |_____/|_|_| |_| |_| .__/|_|\\___|\\____/ \\___/|_|_| |_|_|  |_|\\___||___/___/\\__,_|\\__, |\\___|",
+						"                    | |                                                            __/ |     ",
+						"                    |_|                                                           |___/      ",
+						" ",
+						"                           SimpleJoinMessage main configuration - settings.yml",
+						" ",
+						"------------------------------------------------------------------------",
+						" ",
+						" All the Message format only supported MiniMessage, you can read it more about format at: https://docs.adventure.kyori.net/minimessage/format.html",
+						" MiniMessage about have web interface available, check it out: https://webui.adventure.kyori.net/",
+						" ",
+						" PlaceholderAPI are also supported.",
+						" ",
+						"------------------------------------------------------------------------",
+						" ",
+						"https://fantasyrealms.net",
+						" ",
+						"------------------------------------------------------------------------"
+				)).build());
+		this.loadAndSave();
+	}
+}
