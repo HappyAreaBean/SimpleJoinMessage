@@ -83,6 +83,7 @@ spigot {
     apiVersion '1.13'
     excludeLibraries = ['*']
     softDepends 'PlaceholderAPI'
+    authors 'HappyAreaBean'
     commands {
         simplejoinmessage {
             aliases = ['sjm']
