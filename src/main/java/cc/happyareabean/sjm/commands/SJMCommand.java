@@ -26,6 +26,7 @@ public class SJMCommand implements CommandExecutor {
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 		Audience aSender = SimpleJoinMessage.getAdventure().sender(sender);
 		if (args.length == 0) {
+			label = "/" + label;
 			aSender.sendMessage(Component.textOfChildren(
 					Constants.HEADER,
 					newline(),
