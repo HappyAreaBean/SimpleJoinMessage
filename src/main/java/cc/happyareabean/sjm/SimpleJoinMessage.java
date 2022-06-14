@@ -7,6 +7,7 @@ import cc.happyareabean.sjm.listener.PlayerJoinListener;
 import lombok.Getter;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -36,6 +37,8 @@ public class SimpleJoinMessage extends JavaPlugin {
 
 		getLogger().info("Check supported plugins...");
 		checkSupportedPlugin();
+
+		new Metrics(this, 15462);
 
 		getLogger().info("SimpleJoinMessage version " + getDescription().getVersion() + " has been successfully enabled!");
 	}

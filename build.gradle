@@ -69,12 +69,15 @@ dependencies {
         exclude group: 'org.yaml', module: 'snakeyaml'
     }
 
+    implementation 'org.bstats:bstats-bukkit:3.0.0'
+
 }
 
 shadowJar {
     setClassifier('')
     relocate 'net.kyori', libsPackage + "kyori"
     relocate 'de.exlll', libsPackage + "configlib"
+    relocate 'org.bstats', libsPackage + "bstats"
 }
 
 spigot {
