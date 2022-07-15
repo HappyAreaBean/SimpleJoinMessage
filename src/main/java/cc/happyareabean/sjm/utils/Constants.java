@@ -1,5 +1,6 @@
 package cc.happyareabean.sjm.utils;
 
+import cc.happyareabean.sjm.SimpleJoinMessage;
 import net.kyori.adventure.text.Component;
 
 import static cc.happyareabean.sjm.SimpleJoinMessage.MINIMESSAGE;
@@ -11,5 +12,5 @@ public class Constants {
 
 	public static final Component HEADER = MINIMESSAGE.deserialize("<gradient:green:blue>－－－－－－－－－－－－－－－－－－－－－－－－</gradient>");
 
-	public static final String VERSION = "1.0.0";
+	public static final String VERSION = SimpleJoinMessage.getInstance().getDescription().getVersion();
 }
