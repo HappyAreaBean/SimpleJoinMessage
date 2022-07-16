@@ -11,11 +11,12 @@ import java.util.List;
 public class MessageUtil {
 
 	public static void sendMessageDelay(Player player, final List<String> messages, int delayTicks) {
+		messages.replaceAll(s -> s.replace("{player}", player.getName()));
 		Audience aPlayer = SimpleJoinMessage.getAdventure().player(player);
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				aPlayer.sendMessage(SimpleJoinMessage.getMINIMESSAGE().deserialize(String.join("\n", (SimpleJoinMessage.getInstance().isPAPISupported() ? PlaceholderAPI.setPlaceholders(player, messages) : messages))));
+				aPlayer.sendMessage(SimpleJoinMessage.MINIMESSAGE.deserialize(String.join("\n", (SimpleJoinMessage.getInstance().isPAPISupported() ? PlaceholderAPI.setPlaceholders(player, messages) : messages))));
 			}
 		}.runTaskLater(SimpleJoinMessage.getInstance(), (delayTicks > 0 ? delayTicks : 1L));
 	}
