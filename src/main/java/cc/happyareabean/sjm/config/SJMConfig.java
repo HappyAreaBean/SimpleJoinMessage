@@ -17,15 +17,15 @@ public class SJMConfig extends YamlConfiguration {
 			"The message to be send when player join the server",
 			" ",
 			"Placeholders available:",
-			"   <player> - Player name",
+			"   {player} - Player name",
 	})
 	private List<String> joinMessage = Arrays.asList(
 			"",
-			"<b>Hello <color:#3cff00>%player_name%</color>! Welcome to <color:#00d9ff>My Server</color>!</b>",
+			"<b>Hello <color:#3cff00>{player}</color>! Welcome to <color:#00d9ff>My Server</color>!</b>",
 			"Currently have <yellow>%server_online%</yellow> players online! <b><color:#54585c>|</color></b> Time: <color:#ffac05>%server_time_dd/MM/yyyy hh:mm:ss%</color>",
 			"",
-			"<b><color:#5865f2><click:open_url:'https://go.happyareabean.cc/supportdiscord'>[Click here to join our Discord server]</click></color></b>",
-			"<b><color:#d45b71><click:open_url:'https://go.happyareabean.cc/sjm'>[Download SimpleJoinMessage]</click></color></b>",
+			"<b><color:#5865f2><click:open_url:'https://go.happyareabean.cc/supportdiscord'><hover:show_text:'<green>Click to join our <b><color:#5865f2>Discord</color></b> server!'>[Click here to join our Discord server]</hover></click></color></b>",
+			"<b><gradient:#f7ff00:#db36a4><click:open_url:'https://go.happyareabean.cc/sjm'><hover:show_text:'Click to Download <gradient:#f7ff00:#db36a4><b>SimpleJoinMessage</b></gradient>'>[Download SimpleJoinMessage]</hover></click></gradient></b>",
 			""
 	);
 
@@ -54,14 +54,14 @@ public class SJMConfig extends YamlConfiguration {
 						" ",
 						"------------------------------------------------------------------------",
 						" ",
-						" All the Message format only supported MiniMessage, you can read it more about format at: https://docs.adventure.kyori.net/minimessage/format.html",
-						" MiniMessage about have web interface available, check it out: https://webui.adventure.kyori.net/",
+						" All the Message format only supported MiniMessage, you can read more about format at: https://docs.adventure.kyori.net/minimessage/format.html",
+						" MiniMessage also have web interface available: https://webui.adventure.kyori.net/",
 						" ",
 						" PlaceholderAPI are also supported.",
 						" ",
 						"------------------------------------------------------------------------",
 						" ",
-						"https://fantasyrealms.net",
+						"https://go.happyareabean.cc/sjm",
 						" ",
 						"------------------------------------------------------------------------"
 				)).build());
