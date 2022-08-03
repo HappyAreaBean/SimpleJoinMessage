@@ -38,6 +38,7 @@
 [![Discord][discord-shield]][discord-url]
 
 [![Download from GitHub][download-github]][download-github-url]
+[![Download from SpigotMC][download-spigot]][download-spigot-url]
 
 </div>
 
