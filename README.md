@@ -181,6 +181,6 @@ Project Link: [https://github.com/HappyAreaBean/SimpleJoinMessage](https://githu
 [discord-url]: https://go.happyareabean.cc/supportdiscord
 
 [download-spigot]: https://img.shields.io/badge/Download%20from-SpigotMC-ed8106?style=for-the-badge
-[download-spigot-url]: https://spigotmc.org/resources
+[download-spigot-url]: https://www.spigotmc.org/resources/103413/
 [download-github]: https://img.shields.io/badge/Download%20from-github-181717?style=for-the-badge
 [download-github-url]: https://github.com/HappyAreaBean/SimpleJoinMessage/releases
