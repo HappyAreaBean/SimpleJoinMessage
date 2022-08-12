@@ -43,13 +43,13 @@ public class SJMCommand implements CommandExecutor {
 					newline(),
 					Constants.HEADER,
 					newline(),
-					text().content(label + " reload - ").append(text("Reload SJM settings", GRAY))
+					text().content(label + " reload - ").append(text("Reload SJM", GRAY))
 							.append(newline()),
-					text().content(label + " reloadshow (rs) - ").append(text("Reload SJM settings and show message after reloaded", GRAY))
+					text().content(label + " reloadshow (rs) - ").append(text("Show the join message after reloading SJM settings", GRAY))
 							.append(newline()),
-					text().content(label + " about - ").append(text("Show SJM info", GRAY))
+					text().content(label + " about - ").append(text("Show SJM plugin info", GRAY))
 							.append(newline()),
-					text().content(label + " show - ").append(text("Send join message in your chat", GRAY))
+					text().content(label + " show - ").append(text("Send a join message in your chat", GRAY))
 							.append(newline()),
 					Constants.HEADER
 			));
@@ -60,13 +60,13 @@ public class SJMCommand implements CommandExecutor {
 			SimpleJoinMessage.getInstance().getSJMConfig().loadAndSave();
 			aSender.sendMessage(Constants.PREFIX.append(text(" Reloaded settings.")));
 			if (sender instanceof ConsoleCommandSender) {
-				aSender.sendMessage(Constants.PREFIX.append(text(" Settings reloaded but you're in console, so it won't send the join message.", RED)));
+				aSender.sendMessage(Constants.PREFIX.append(text(" The settings have been reloaded, but you're in console mode, so the message won't be sent.", RED)));
 				return true;
 			}
 			MessageUtil.sendMessageDelay((Player) sender, SimpleJoinMessage.getInstance().getSJMConfig().getJoinMessage(), 0);
 		} else if (args[0].equalsIgnoreCase("show")) {
 			if (!(sender instanceof Player)) {
-				aSender.sendMessage(Constants.PREFIX.append(text(" You're not a player! Join message can be only show to player.", RED)));
+				aSender.sendMessage(Constants.PREFIX.append(text(" You're not a player! The join message can only be shown to the player.", RED)));
 				return true;
 			}
 			MessageUtil.sendMessageDelay((Player) sender, SimpleJoinMessage.getInstance().getSJMConfig().getJoinMessage(), 0);
