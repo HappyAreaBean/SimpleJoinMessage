@@ -14,7 +14,7 @@ import java.util.List;
 public class SJMConfig extends YamlConfiguration {
 
 	@Comment({
-			"The message to be send when player join the server",
+			"The message to be sent when player joins the server.",
 			" ",
 			"Placeholders available:",
 			"   {player} - Player name",
@@ -38,7 +38,7 @@ public class SJMConfig extends YamlConfiguration {
 	private String timeFormat = "dd/MM/yyyy hh:mm:ss";
 
 	@Comment({
-			"Whether the message should be delayed? (In ticks)",
+			"Whether the message should be delayed? (In ticks! 1 second = 20 ticks)",
 			"Change it to 0 to disable delay."
 	})
 	private int delayTicks = 20;
