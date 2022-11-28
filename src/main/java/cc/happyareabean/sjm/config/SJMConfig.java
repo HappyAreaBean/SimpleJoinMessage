@@ -75,4 +75,9 @@ public class SJMConfig extends YamlConfiguration {
 				)).build());
 		this.loadAndSave();
 	}
+
+	public void reloadAndSave() {
+		load();
+		save();
+	}
 }

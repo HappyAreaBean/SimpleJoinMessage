@@ -1,14 +1,17 @@
 package cc.happyareabean.sjm;
 
 import cc.happyareabean.sjm.commands.SJMCommand;
-import cc.happyareabean.sjm.commands.SJMTabComplete;
 import cc.happyareabean.sjm.config.SJMConfig;
 import cc.happyareabean.sjm.listener.PlayerJoinListener;
+import cc.happyareabean.sjm.utils.AdventureWebEditorAPI;
 import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
+import revxrsal.commands.bukkit.BukkitCommandHandler;
 
 import java.io.File;
 
@@ -16,8 +19,9 @@ public class SimpleJoinMessage extends JavaPlugin {
 
 	@Getter private static SimpleJoinMessage instance;
 	@Getter public static final MiniMessage MINIMESSAGE = MiniMessage.miniMessage();
+	@Getter public static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.legacy('&');
 	@Getter private static BukkitAudiences adventure;
-
+	@Getter private BukkitCommandHandler commandHandler;
 	@Getter private SJMConfig SJMConfig;
 
 	@Override
@@ -32,8 +36,18 @@ public class SimpleJoinMessage extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
 
 		getLogger().info("Registering commands...");
-		getServer().getPluginCommand("simplejoinmessage").setExecutor(new SJMCommand());
-		getServer().getPluginCommand("simplejoinmessage").setTabCompleter(new SJMTabComplete());
+		commandHandler = BukkitCommandHandler.create(this);
+		commandHandler.enableAdventure(adventure);
+		commandHandler.setHelpWriter((command, actor) -> {
+			StringBuilder sb = new StringBuilder();
+			sb.append("&8• &e/");
+			sb.append(command.getPath().toRealString());
+			if (!command.getUsage().isEmpty()) sb.append(command.getUsage());
+			sb.append(" &7- &f");
+			sb.append(command.getDescription());
+			return sb.toString();
+		});
+		commandHandler.register(new SJMCommand());
 
 		getLogger().info("Check supported plugins...");
 		checkSupportedPlugin();
