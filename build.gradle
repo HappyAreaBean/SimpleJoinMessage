@@ -65,6 +65,8 @@ dependencies {
     implementation "net.kyori:adventure-text-minimessage:4.11.0"
     implementation "net.kyori:adventure-platform-bukkit:4.1.2"
 
+    implementation "com.squareup.okhttp3:okhttp:4.10.0"
+
     implementation("de.exlll:configlib-core:2.2.1") {
         exclude group: 'org.yaml', module: 'snakeyaml'
     }
@@ -78,6 +80,7 @@ shadowJar {
     relocate 'net.kyori', libsPackage + "kyori"
     relocate 'de.exlll', libsPackage + "configlib"
     relocate 'org.bstats', libsPackage + "bstats"
+    relocate 'com.squareup.okhttp3', libsPackage + "okhttp"
 }
 
 spigot {
