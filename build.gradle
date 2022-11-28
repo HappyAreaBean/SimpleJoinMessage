@@ -40,6 +40,8 @@ repositories {
         url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
     }
 
+    maven { url 'https://jitpack.io' }
+
     //Add your repositories here
     mavenLocal()
 }
@@ -66,6 +68,9 @@ dependencies {
     implementation "net.kyori:adventure-platform-bukkit:4.1.2"
 
     implementation "com.squareup.okhttp3:okhttp:4.10.0"
+
+    implementation 'com.github.Revxrsal.Lamp:bukkit:5cbeef24b3'
+    implementation 'com.github.Revxrsal.Lamp:common:5cbeef24b3'
 
     implementation("de.exlll:configlib-core:2.2.1") {
         exclude group: 'org.yaml', module: 'snakeyaml'
