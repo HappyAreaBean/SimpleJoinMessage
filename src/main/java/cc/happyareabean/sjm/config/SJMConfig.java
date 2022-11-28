@@ -1,15 +1,18 @@
 package cc.happyareabean.sjm.config;
 
+import cc.happyareabean.sjm.SimpleJoinMessage;
 import de.exlll.configlib.annotation.Comment;
 import de.exlll.configlib.configs.yaml.YamlConfiguration;
 import de.exlll.configlib.format.FieldNameFormatters;
 import lombok.Getter;
+import lombok.Setter;
 
+import java.net.URI;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
-@Getter
+@Getter @Setter
 @SuppressWarnings("FieldMayBeFinal")
 public class SJMConfig extends YamlConfiguration {
 
@@ -22,13 +25,13 @@ public class SJMConfig extends YamlConfiguration {
 			"   {online} - Server online players count",
 	})
 	private List<String> joinMessage = Arrays.asList(
-			"",
+			" ",
 			"<b>Hello <color:#3cff00>{player}</color>! Welcome to <color:#00d9ff>My Server</color>!</b>",
 			"Currently have <yellow>{online}</yellow> players online! <b><color:#54585c>|</color></b> Time: <color:#ffac05>{time}</color>",
-			"",
+			" ",
 			"<b><color:#5865f2><click:open_url:'https://go.happyareabean.cc/supportdiscord'><hover:show_text:'<green>Click to join our <b><color:#5865f2>Discord</color></b> server!'>[Click here to join our Discord server]</hover></click></color></b>",
 			"<b><gradient:#f7ff00:#db36a4><click:open_url:'https://go.happyareabean.cc/sjm'><hover:show_text:'Click to Download <gradient:#f7ff00:#db36a4><b>SimpleJoinMessage</b></gradient>'>[Download SimpleJoinMessage]</hover></click></gradient></b>",
-			""
+			" "
 	);
 
 	@Comment({
@@ -42,6 +45,13 @@ public class SJMConfig extends YamlConfiguration {
 			"Change it to 0 to disable delay."
 	})
 	private int delayTicks = 20;
+
+	@Comment({
+			"The URL to send adventure web interface request.",
+			" ",
+			"You usually don't need to change it, keep it as default.",
+	})
+	private String adventureWebURL = "https://webui.adventure.kyori.net";
 
 	public SJMConfig(Path path) {
 		super(path, YamlProperties.builder()
@@ -79,5 +89,6 @@ public class SJMConfig extends YamlConfiguration {
 	public void reloadAndSave() {
 		load();
 		save();
+		SimpleJoinMessage.getInstance().getAdventureWebEditorAPI().setRoot(URI.create(adventureWebURL));
 	}
 }
