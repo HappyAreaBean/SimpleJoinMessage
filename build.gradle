@@ -82,11 +82,17 @@ dependencies {
 
 shadowJar {
     archiveClassifier.set('')
-    relocate 'net.kyori', libsPackage + "kyori"
-    relocate 'de.exlll', libsPackage + "configlib"
-    relocate 'org.bstats', libsPackage + "bstats"
-    relocate 'com.squareup.okhttp3', libsPackage + "okhttp"
 }
+
+import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
+
+task relocateShadowJar(type: ConfigureShadowRelocation) {
+    target = tasks.shadowJar
+    prefix = project.getGroup().toString() + ".sjm.libs" // Default value is "shadow"
+
+}
+
+tasks.shadowJar.dependsOn tasks.relocateShadowJar
 
 spigot {
     // The 'name' and 'version' will be set to project.version and project.name,
@@ -95,14 +101,6 @@ spigot {
     excludeLibraries = ['*']
     softDepends 'PlaceholderAPI'
     authors 'HappyAreaBean'
-    commands {
-        simplejoinmessage {
-            aliases = ['sjm']
-            description = 'SimpleJoinMessage command'
-            permission = 'sjm.admin'
-            usage = '/<command> [about|reload]'
-        }
-    }
     permissions {
         'sjm.admin' {
             description = 'Allows to use SimpleJoinMessage commands.'
