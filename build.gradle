@@ -69,8 +69,8 @@ dependencies {
 
     implementation "com.squareup.okhttp3:okhttp:4.10.0"
 
-    implementation 'com.github.Revxrsal.Lamp:bukkit:5cbeef24b3'
-    implementation 'com.github.Revxrsal.Lamp:common:5cbeef24b3'
+    implementation 'com.github.Revxrsal.Lamp:bukkit:3.1.5'
+    implementation 'com.github.Revxrsal.Lamp:common:3.1.5'
 
     implementation("de.exlll:configlib-core:2.2.1") {
         exclude group: 'org.yaml', module: 'snakeyaml'
