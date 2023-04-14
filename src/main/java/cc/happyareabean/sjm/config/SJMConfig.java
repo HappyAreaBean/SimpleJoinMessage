@@ -51,7 +51,7 @@ public class SJMConfig extends YamlConfiguration {
 			" ",
 			"You usually don't need to change it, keep it as default.",
 	})
-	private String adventureWebURL = "https://webui.adventure.kyori.net";
+	private String adventureWebURL = "https://webui.advntr.dev/";
 
 	public SJMConfig(Path path) {
 		super(path, YamlProperties.builder()
@@ -72,8 +72,8 @@ public class SJMConfig extends YamlConfiguration {
 						" ",
 						"------------------------------------------------------------------------",
 						" ",
-						" All the Message format only supported MiniMessage, you can read more about format at: https://docs.adventure.kyori.net/minimessage/format.html",
-						" MiniMessage also have web interface available: https://webui.adventure.kyori.net/",
+						" All the Message format only supported MiniMessage, you can read more about format at: https://docs.advntr.dev/minimessage/format.html",
+						" MiniMessage also have web interface available: https://webui.advntr.dev/",
 						" ",
 						" PlaceholderAPI are also supported.",
 						" ",
@@ -84,6 +84,13 @@ public class SJMConfig extends YamlConfiguration {
 						"------------------------------------------------------------------------"
 				)).build());
 		this.loadAndSave();
+
+		// Update old url
+		if (adventureWebURL.equalsIgnoreCase("https://webui.adventure.kyori.net")) {
+			adventureWebURL = "https://webui.advntr.dev/";
+			save();
+			load();
+		}
 	}
 
 	public void reloadAndSave() {
