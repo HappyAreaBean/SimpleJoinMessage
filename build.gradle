@@ -2,6 +2,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'kr.entree.spigradle' version '2.4.2'
     id 'java'
+    id "xyz.jpenilla.run-paper" version "2.1.0"
 }
 
 group 'cc.happyareabean'
@@ -48,7 +49,7 @@ repositories {
 
 ext {
     //Define one of the supported mc versions
-    mcVersion = '1.19'
+    mcVersion = '1.20.1'
 }
 
 dependencies {
@@ -81,13 +82,9 @@ dependencies {
 
 }
 
-shadowJar {
-    archiveClassifier.set('')
-}
-
 import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
 
-task relocateShadowJar(type: ConfigureShadowRelocation) {
+tasks.register('relocateShadowJar', ConfigureShadowRelocation) {
     target = tasks.shadowJar
     prefix = project.getGroup().toString() + ".sjm.libs" // Default value is "shadow"
 
@@ -115,65 +112,20 @@ processResources {
     expand project.properties
 }
 
-task cleanPlugin() {
-    group 'deploy'
-    description 'Cleans the plugin in the working directory up'
+def runDirectoryDir = project.hasProperty('runPaper.runDirectory') ? project.getProperty('runPaper.runDirectory') : "${project.rootProject.projectDir}/working"
+def runServerJar = project.hasProperty('runPaper.serverJar') ? project.getProperty('runPaper.serverJar') : null
 
-    try {
-        delete 'working/plugins/' + rootProject.name + '-' + project.version.toString() + '.jar'
-    } catch (ignored) {
-
+tasks {
+    runServer {
+        // Configure the Minecraft version for our task.
+        // This is the only required configuration besides applying the plugin.
+        // Your plugin's jar (or shadowJar if present) will be used automatically.
+        minecraftVersion(mcVersion)
+        if (runServerJar != null)
+            serverJar(runDirectory.file(runServerJar as String))
+        runDirectory.set(file(runDirectoryDir))
     }
-}
-
-task deploy(type: Copy, dependsOn: ['cleanPlugin', 'jar']) {
-    group 'deploy'
-    description 'Exports you plugin to the plugin directory in your test server'
-
-    from shadowJar
-    into 'working/plugins'
-}
-
-task setupServer {
-    group 'server'
-    description 'Downloads the server jar'
-
-    def server = new File('working/server.jar')
-
-    if (server.exists()) {
-        return
+    shadowJar {
+        archiveClassifier.set('')
     }
-
-    def url = ''
-    switch (mcVersion) {
-        case '1.8.8':
-            url = 'https://cdn.getbukkit.org/spigot/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar'
-            break
-
-        case '1.12.2':
-            url = 'https://cdn.getbukkit.org/spigot/spigot-1.12.2.jar'
-            break
-
-        case '1.13.2':
-            url = 'https://cdn.getbukkit.org/spigot/spigot-1.13.2.jar'
-            break
-
-        case '1.14.4':
-            url = 'https://cdn.getbukkit.org/spigot/spigot-1.14.4.jar'
-            break
-
-        case '1.18.2':
-            url = 'https://cdn.getbukkit.org/spigot/spigot-1.18.2.jar'
-            break
-
-        case '1.19':
-            url = 'https://cdn.getbukkit.org/spigot/spigot-1.19.jar'
-            break
-    }
-
-    if (url.isEmpty()) {
-        throw new GradleException('NOT A SUPPORTED VERSION, PLEASE USE [1.8.8, 1.12.2, 1.13.2]!')
-    }
-
-    new URL(url).withInputStream { i -> server.withOutputStream { it << i } }
 }
