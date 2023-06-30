@@ -74,9 +74,7 @@ dependencies {
     implementation 'com.github.Revxrsal.Lamp:bukkit:3.1.5'
     implementation 'com.github.Revxrsal.Lamp:common:3.1.5'
 
-    implementation("de.exlll:configlib-core:2.2.1") {
-        exclude group: 'org.yaml', module: 'snakeyaml'
-    }
+    implementation("de.exlll:configlib-core:2.3.0")
 
     implementation 'org.bstats:bstats-bukkit:3.0.0'
 
