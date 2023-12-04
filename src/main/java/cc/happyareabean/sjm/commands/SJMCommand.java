@@ -43,7 +43,7 @@ public class SJMCommand {
 		List<Component> list = new ArrayList<>();
 		list.add(Constants.HEADER);
 		list.add(MINIMESSAGE.deserialize(String.format("<gradient:#f7ff00:#db36a4><b>SimpleJoinMessage</b></gradient> <white>%s</white>", Constants.VERSION))
-				.clickEvent(openUrl("https://go.happyareabean/sjm"))
+				.clickEvent(openUrl("https://go.happyareabean.cc/sjm"))
 				.hoverEvent(MINIMESSAGE.deserialize("<rainbow>click me!")));
 		list.add(text()
 				.content("By ")
@@ -132,7 +132,7 @@ public class SJMCommand {
 				Constants.HEADER,
 				newline(),
 				MINIMESSAGE.deserialize(String.format("<gradient:#f7ff00:#db36a4><b>SimpleJoinMessage</b></gradient> <white>%s</white>", Constants.VERSION))
-						.clickEvent(openUrl("https://go.happyareabean/sjm"))
+						.clickEvent(openUrl("https://go.happyareabean.cc/sjm"))
 						.hoverEvent(MINIMESSAGE.deserialize("<rainbow>click me!")),
 				newline(),
 				text()
