@@ -24,7 +24,7 @@ public class MessageUtil {
 		SJMConfig config = SimpleJoinMessage.getInstance().getSJMConfig();
 		DateTimeFormatter formatter =
 				DateTimeFormatter.ofPattern(config.getTimeFormat())
-						.withZone( ZoneId.systemDefault() );
+						.withZone(ZoneId.systemDefault());
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -34,6 +34,6 @@ public class MessageUtil {
 						.replace("{time}", formatter.format(Instant.now()))));
 				aPlayer.sendMessage(SimpleJoinMessage.MINIMESSAGE.deserialize(String.join("\n", (SimpleJoinMessage.getInstance().isPAPISupported() ? PlaceholderAPI.setPlaceholders(player, newMessage) : newMessage))));
 			}
-		}.runTaskLater(SimpleJoinMessage.getInstance(), (delayTicks > 0 ? delayTicks : 1L));
+		}.runTaskLaterAsynchronously(SimpleJoinMessage.getInstance(), (delayTicks > 0 ? delayTicks : 1L));
 	}
 }

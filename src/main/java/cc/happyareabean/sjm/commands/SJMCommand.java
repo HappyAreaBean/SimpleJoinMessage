@@ -9,6 +9,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.permissions.PermissionDefault;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.DefaultFor;
@@ -36,7 +37,7 @@ import static net.kyori.adventure.text.event.ClickEvent.openUrl;
 @CommandPermission("sjm.admin")
 public class SJMCommand {
 
-	@DefaultFor({"simplejoinmessage", "sjm"})
+	@DefaultFor({"~"})
 	@Description("SimpleJoinMessage commands list")
 	public void help(BukkitCommandActor actor, CommandHelp<String> helpEntries, @Default("1") int page) {
 		List<Component> list = new ArrayList<>();
