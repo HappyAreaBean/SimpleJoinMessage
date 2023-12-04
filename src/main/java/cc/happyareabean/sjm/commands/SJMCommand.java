@@ -103,7 +103,7 @@ public class SJMCommand {
 	public void applyEdits(BukkitCommandActor actor, @Named("token") String token) {
 		SJMConfig config = SimpleJoinMessage.getInstance().getSJMConfig();
 		AdventureWebEditorAPI api = SimpleJoinMessage.getInstance().getAdventureWebEditorAPI();
-		actor.reply(Constants.PREFIX.append(text(" Applying your edits...", NamedTextColor.GRAY)));
+		actor.reply(Constants.PREFIX.append(text("Applying your edits...", NamedTextColor.GRAY)));
 		api.retrieveSession(token)
 				.whenComplete((value, throwable) -> {
 					if (throwable != null) {
