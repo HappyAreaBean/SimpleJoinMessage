@@ -3,6 +3,7 @@ package cc.happyareabean.sjm;
 import cc.happyareabean.sjm.commands.SJMCommand;
 import cc.happyareabean.sjm.config.SJMConfig;
 import cc.happyareabean.sjm.listener.PlayerJoinListener;
+import cc.happyareabean.sjm.listener.UpdateNotifyListener;
 import cc.happyareabean.sjm.utils.AdventureWebEditorAPI;
 import cc.happyareabean.sjm.utils.Constants;
 import lombok.Getter;
@@ -11,12 +12,19 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.inventivetalent.update.spiget.SpigetUpdate;
+import org.inventivetalent.update.spiget.UpdateCallback;
+import org.inventivetalent.update.spiget.comparator.VersionComparator;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
 
 import java.io.File;
 import java.net.URI;
+import java.util.Arrays;
 
 public class SimpleJoinMessage extends JavaPlugin {
+
+	public static String NEXT_VERSION = "";
+	public static String DOWNLOAD_URL = "https://www.spigotmc.org/resources/103413/";
 
 	@Getter private static SimpleJoinMessage instance;
 	@Getter public static final MiniMessage MINIMESSAGE = MiniMessage.miniMessage();
@@ -36,6 +44,7 @@ public class SimpleJoinMessage extends JavaPlugin {
 
 		getLogger().info("Registering listener...");
 		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+		getServer().getPluginManager().registerEvents(new UpdateNotifyListener(), this);
 
 		getLogger().info("Registering commands...");
 		commandHandler = BukkitCommandHandler.create(this);
@@ -63,6 +72,48 @@ public class SimpleJoinMessage extends JavaPlugin {
 		new Metrics(this, 15462);
 
 		getLogger().info("SimpleJoinMessage version " + getDescription().getVersion() + " has been successfully enabled!");
+
+		checkUpdate();
+	}
+
+	public void checkUpdate() {
+		String version = getDescription().getVersion();
+		if (version.endsWith("-SNAPSHOT")) {
+			Arrays.asList(
+					"******************************************",
+					"You are currently using development build of SimpleJoinMessage!",
+					"Please report issues here: https://go.happyareabean.cc/sjm/issues",
+					"******************************************"
+			).forEach(s -> getLogger().warning(s));
+			return;
+		}
+
+		SpigetUpdate updater = new SpigetUpdate(this, 103413);
+		updater.setVersionComparator(VersionComparator.SEM_VER);
+		updater.checkForUpdate(new UpdateCallback() {
+			@Override
+			public void updateAvailable(String newVersion, String downloadUrl, boolean hasDirectDownload) {
+				NEXT_VERSION = newVersion;
+
+				Arrays.asList(
+						"******************************************",
+						"",
+						"There is a new version of SimpleJoinMessage available!",
+						"",
+						"Your Version: " + version,
+						"New Version: " + NEXT_VERSION,
+						"",
+						"Download at " + downloadUrl,
+						"",
+						"******************************************"
+				).forEach(s -> getLogger().warning(s));
+			}
+
+			@Override
+			public void upToDate() {
+				getLogger().info(String.format("SimpleJoinMessage is up to date! (%s)", version));
+			}
+		});
 	}
 
 	public void checkSupportedPlugin() {
