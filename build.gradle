@@ -15,8 +15,6 @@ compileJava.options.encoding = 'UTF-8'
 
 archivesBaseName = rootProject.name
 
-def libsPackage = group + ".sjm.libs."
-
 repositories {
     mavenCentral()
 
@@ -81,16 +79,6 @@ dependencies {
 
 }
 
-import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
-
-tasks.register('relocateShadowJar', ConfigureShadowRelocation) {
-    target = tasks.shadowJar
-    prefix = project.getGroup().toString() + ".sjm.libs" // Default value is "shadow"
-
-}
-
-tasks.shadowJar.dependsOn tasks.relocateShadowJar
-
 spigot {
     // The 'name' and 'version' will be set to project.version and project.name,
     // But we may set those manually.
@@ -114,6 +102,8 @@ processResources {
 def runDirectoryDir = project.hasProperty('runPaper.runDirectory') ? project.getProperty('runPaper.runDirectory') : "${project.rootProject.projectDir}/working"
 def runServerJar = project.hasProperty('runPaper.serverJar') ? project.getProperty('runPaper.serverJar') : null
 
+def libsPackage = group + ".sjm.libs"
+
 tasks {
     runServer {
         // Configure the Minecraft version for our task.
@@ -126,5 +116,18 @@ tasks {
     }
     shadowJar {
         archiveClassifier.set('')
+
+        relocate("revxrsal.commands", "${libsPackage}.lamp")
+        relocate("org.bstats", "${libsPackage}.bstats")
+        relocate("org.inventivetalent.update.spiget", "${libsPackage}.spigetupdater")
+        relocate("de.exlll.configlib", "${libsPackage}.configlib")
+        relocate("org.yaml.snakeyaml", "${libsPackage}.snakeyaml")
+        relocate("net.kyori", "${libsPackage}.kyori")
+
+        relocate("okio", "${libsPackage}.okio")
+        relocate("okhttp3", "${libsPackage}.okhttp3")
+        relocate("org.intellij", "${libsPackage}.intellij")
+        relocate("org.jetbrains.annotations", "${libsPackage}.annotations")
+        relocate("kotlin", "${libsPackage}.kotlin")
     }
 }
