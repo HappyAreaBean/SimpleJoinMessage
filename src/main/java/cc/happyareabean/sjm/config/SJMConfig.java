@@ -23,6 +23,15 @@ public class SJMConfig extends YamlConfiguration {
 			"   {player} - Player name",
 			"   {time} - Current time",
 			"   {online} - Server online players count",
+			" ",
+			"--------------------------------- NOTE ---------------------------------",
+			" ",
+			" We recommend you edit your join message through web editor by using /sjm editor",
+			" instead of editing directly with the setting file.",
+			" ",
+			" If you know what you're doing, you can safely ignore this warning.",
+			" ",
+			"------------------------------------------------------------------------",
 	})
 	private List<String> joinMessage = Arrays.asList(
 			" ",
