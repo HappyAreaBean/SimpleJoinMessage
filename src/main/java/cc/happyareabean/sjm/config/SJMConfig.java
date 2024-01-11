@@ -16,6 +16,8 @@ import java.util.List;
 @SuppressWarnings("FieldMayBeFinal")
 public class SJMConfig extends YamlConfiguration {
 
+	public final Path path;
+
 	@Comment({
 			"The message to be sent when player joins the server.",
 			" ",
@@ -92,6 +94,8 @@ public class SJMConfig extends YamlConfiguration {
 						" ",
 						"------------------------------------------------------------------------"
 				)).build());
+		this.path = path;
+
 		this.loadAndSave();
 
 		// Update old url

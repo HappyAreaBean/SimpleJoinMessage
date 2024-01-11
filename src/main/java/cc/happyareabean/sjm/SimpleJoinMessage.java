@@ -12,6 +12,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.FileUtil;
 import org.inventivetalent.update.spiget.SpigetUpdate;
 import org.inventivetalent.update.spiget.UpdateCallback;
 import org.inventivetalent.update.spiget.comparator.VersionComparator;
@@ -19,6 +20,10 @@ import revxrsal.commands.bukkit.BukkitCommandHandler;
 
 import java.io.File;
 import java.net.URI;
+import java.nio.file.Path;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class SimpleJoinMessage extends JavaPlugin {
@@ -124,5 +129,17 @@ public class SimpleJoinMessage extends JavaPlugin {
 
 	public boolean isPAPISupported() {
 		return getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
+	}
+
+	public String regenerateSettings() {
+		Path path = SJMConfig.getPath();
+		String fileName = path.getFileName().toString();
+		String timestamp = ZonedDateTime.now(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd.HH-mm-ss"));
+		String backupFileName = fileName + ".backup." + timestamp;
+		FileUtil.copy(path.toFile(), path.getParent().resolve(backupFileName).toFile());
+		if (path.toFile().delete()) {
+			SJMConfig = new SJMConfig(path);
+		}
+		return backupFileName;
 	}
 }

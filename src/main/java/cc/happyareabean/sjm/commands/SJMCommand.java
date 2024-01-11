@@ -124,6 +124,15 @@ public class SJMCommand {
 				});
 	}
 
+	@Subcommand({"regenerate"})
+	@Description("Regenerate SJM settings back to default")
+	public void regenerate(BukkitCommandActor actor) {
+		actor.reply(Constants.PREFIX.append(text("Regenerating SJM settings...")));
+		String fileName = SimpleJoinMessage.getInstance().regenerateSettings();
+		actor.reply(Constants.PREFIX.append(text("Settings has been regenerated and a backup has been saved as "))
+				.append(text(fileName, NamedTextColor.GRAY)));
+	}
+
 	@Subcommand({"about"})
 	@Description("Show SimpleJoinMessage plugin info <3")
 	public void about(BukkitCommandActor actor) {
