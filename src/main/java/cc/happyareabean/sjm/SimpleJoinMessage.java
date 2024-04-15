@@ -2,6 +2,7 @@ package cc.happyareabean.sjm;
 
 import cc.happyareabean.sjm.commands.SJMCommand;
 import cc.happyareabean.sjm.config.SJMConfig;
+import cc.happyareabean.sjm.config.SJMMisc;
 import cc.happyareabean.sjm.listener.PlayerJoinListener;
 import cc.happyareabean.sjm.listener.UpdateNotifyListener;
 import cc.happyareabean.sjm.utils.AdventureWebEditorAPI;
@@ -38,6 +39,7 @@ public class SimpleJoinMessage extends JavaPlugin {
 	@Getter private AdventureWebEditorAPI adventureWebEditorAPI;
 	@Getter private BukkitCommandHandler commandHandler;
 	@Getter private SJMConfig SJMConfig;
+	@Getter private SJMMisc miscConfig;
 
 	@Override
 	public void onEnable() {
@@ -46,6 +48,7 @@ public class SimpleJoinMessage extends JavaPlugin {
 
 		getLogger().info("Loading settings...");
 		SJMConfig = new SJMConfig(new File(getDataFolder(), "settings.yml").toPath());
+		miscConfig = new SJMMisc(new File(getDataFolder(), "misc.yml").toPath());
 
 		getLogger().info("Registering listener...");
 		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -78,7 +81,7 @@ public class SimpleJoinMessage extends JavaPlugin {
 
 		getLogger().info("SimpleJoinMessage version " + getDescription().getVersion() + " has been successfully enabled!");
 
-		checkUpdate();
+		if (miscConfig.isUpdateChecker()) checkUpdate();
 	}
 
 	public void checkUpdate() {
