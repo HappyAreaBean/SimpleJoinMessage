@@ -41,6 +41,10 @@ repositories {
         url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
     }
 
+    maven {
+        url = "https://repo.fantasyrealms.net/releases"
+    }
+
     maven { url 'https://jitpack.io' }
 
     //Add your repositories here
