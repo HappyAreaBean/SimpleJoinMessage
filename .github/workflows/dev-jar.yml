@@ -20,7 +20,7 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build with Gradle
         run: |
-          ./gradlew jar snapshotVersion
+          ./gradlew shadowJar snapshotVersion
            git_hash=$(git rev-parse --short "$GITHUB_SHA")
            echo "git_hash=$git_hash" >> $GITHUB_ENV
            echo "snapshotVersion=$(cat build/versions/snapshot.txt)" >> $GITHUB_ENV
