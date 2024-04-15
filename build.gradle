@@ -1,3 +1,5 @@
+import java.nio.file.Files
+
 plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'kr.entree.spigradle' version '2.4.2'
@@ -131,3 +133,17 @@ tasks {
         relocate("kotlin", "${libsPackage}.kotlin")
     }
 }
+
+abstract class PrintSnapshotVersionTask extends DefaultTask {
+    @TaskAction
+    def print() {
+        File versionsDir = project.file("$project.buildDir/versions")
+        File textFile = project.file("$project.buildDir/versions/snapshot.txt")
+        versionsDir.mkdirs()
+        Files.deleteIfExists(textFile.toPath())
+        textFile.createNewFile()
+        textFile << "$project.version"
+    }
+}
+
+tasks.register('snapshotVersion', PrintSnapshotVersionTask)
