@@ -1,3 +1,5 @@
+import java.nio.file.Files
+
 plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'kr.entree.spigradle' version '2.4.2'
@@ -37,6 +39,10 @@ repositories {
     maven {
         name = "sonatype-oss-snapshots1"
         url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+    }
+
+    maven {
+        url = "https://repo.fantasyrealms.net/releases"
     }
 
     maven { url 'https://jitpack.io' }
@@ -131,3 +137,17 @@ tasks {
         relocate("kotlin", "${libsPackage}.kotlin")
     }
 }
+
+abstract class PrintSnapshotVersionTask extends DefaultTask {
+    @TaskAction
+    def print() {
+        File versionsDir = project.file("$project.buildDir/versions")
+        File textFile = project.file("$project.buildDir/versions/snapshot.txt")
+        versionsDir.mkdirs()
+        Files.deleteIfExists(textFile.toPath())
+        textFile.createNewFile()
+        textFile << "$project.version"
+    }
+}
+
+tasks.register('snapshotVersion', PrintSnapshotVersionTask)
