@@ -86,7 +86,7 @@ public class SimpleJoinMessage extends JavaPlugin {
 
 	public void checkUpdate() {
 		String version = getDescription().getVersion();
-		if (version.endsWith("-SNAPSHOT")) {
+		if (version.contains("-SNAPSHOT")) {
 			Arrays.asList(
 					"******************************************",
 					"You are currently using development build of SimpleJoinMessage!",
