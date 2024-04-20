@@ -1,3 +1,9 @@
+<div align="center">
+<a href="https://ko-fi.com/happyareabean">
+    <img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="ko-fi-button">
+  </a>
+</div>
+
 <div id="top"></div>
 
 <!-- PROJECT SHIELDS -->
