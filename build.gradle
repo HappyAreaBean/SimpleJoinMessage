@@ -49,6 +49,10 @@ repositories {
         url = "https://repo.fantasyrealms.net/releases"
     }
 
+    maven {
+        url = "https://repo.fantasyrealms.net/other-snapshots"
+    }
+
     maven { url 'https://jitpack.io' }
 
     //Add your repositories here
@@ -77,7 +81,7 @@ dependencies {
     implementation "net.kyori:adventure-text-minimessage:4.15.0"
     implementation "net.kyori:adventure-platform-bukkit:4.3.2"
 
-    implementation 'com.github.InventivetalentDev.Spiget-Update:bukkit:1.4.6-SNAPSHOT'
+    implementation 'cc.happyareabean.spiget-update:bukkit:1.4.7-SNAPSHOT'
     implementation "com.squareup.okhttp3:okhttp:4.10.0"
 
     implementation 'com.github.Revxrsal.Lamp:bukkit:3.1.8'

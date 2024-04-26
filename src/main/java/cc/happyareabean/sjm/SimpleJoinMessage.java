@@ -81,7 +81,7 @@ public class SimpleJoinMessage extends JavaPlugin {
 
 		getLogger().info("SimpleJoinMessage version " + getDescription().getVersion() + " has been successfully enabled!");
 
-		if (miscConfig.isUpdateChecker()) checkUpdate();
+		checkUpdate();
 	}
 
 	public void checkUpdate() {
@@ -96,8 +96,11 @@ public class SimpleJoinMessage extends JavaPlugin {
 			return;
 		}
 
+		if (!miscConfig.isUpdateChecker()) return;
+
 		SpigetUpdate updater = new SpigetUpdate(this, 103413);
 		updater.setVersionComparator(VersionComparator.SEM_VER);
+		updater.setDebug(false);
 		updater.checkForUpdate(new UpdateCallback() {
 			@Override
 			public void updateAvailable(String newVersion, String downloadUrl, boolean hasDirectDownload) {
@@ -120,6 +123,11 @@ public class SimpleJoinMessage extends JavaPlugin {
 			@Override
 			public void upToDate() {
 				getLogger().info(String.format("SimpleJoinMessage is up to date! (%s)", version));
+			}
+
+			@Override
+			public void updateCheckFailed() {
+				getLogger().warning("Failed to check update.");
 			}
 		});
 	}
