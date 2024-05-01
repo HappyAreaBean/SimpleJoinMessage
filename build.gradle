@@ -84,8 +84,8 @@ dependencies {
     implementation 'cc.happyareabean.spiget-update:bukkit:1.4.7-SNAPSHOT'
     implementation "com.squareup.okhttp3:okhttp:4.10.0"
 
-    implementation 'com.github.Revxrsal.Lamp:bukkit:3.1.8'
-    implementation 'com.github.Revxrsal.Lamp:common:3.1.8'
+    implementation 'com.github.Revxrsal.Lamp:bukkit:3.2.1'
+    implementation 'com.github.Revxrsal.Lamp:common:3.2.1'
 
     implementation("de.exlll:configlib-core:2.3.0")
 
