@@ -77,9 +77,9 @@ dependencies {
 
     compileOnly 'me.clip:placeholderapi:2.11.1'
 
-    implementation "net.kyori:adventure-api:4.15.0"
-    implementation "net.kyori:adventure-text-minimessage:4.15.0"
-    implementation "net.kyori:adventure-platform-bukkit:4.3.2"
+    implementation "net.kyori:adventure-api:4.17.0"
+    implementation "net.kyori:adventure-text-minimessage:4.17.0"
+    implementation "net.kyori:adventure-platform-bukkit:4.3.3"
 
     implementation 'cc.happyareabean.spiget-update:bukkit:1.4.7-SNAPSHOT'
     implementation "com.squareup.okhttp3:okhttp:4.10.0"
