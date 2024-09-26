@@ -19,14 +19,14 @@
 <br />
 <div align="center">
   <a href="https://github.com/HappyAreaBean/SimpleJoinMessage">
-    <img src="images/logo.png" alt="Logo" width="1039" height="148">
+    <img src="images/logo.png" alt="Logo" width="1024" height="196">
   </a>
 
 <h3 align="center">SimpleJoinMessage</h3>
 
   <p align="center">
     SimpleJoinMessage is a simple join message plugin that provides you the easiest join message solution!    <br />
-    <a href="https://github.com/HappyAreaBean/SimpleJoinMessage"><strong>Explore the docs »</strong></a>
+    <a href="https://docs.happyareabean.cc/docs/category/simplejoinmessage"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/HappyAreaBean/SimpleJoinMessage/release">Download from GitHub</a>
