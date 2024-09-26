@@ -43,6 +43,7 @@
 [![Issues][issues-shield]][issues-url]
 [![Discord][discord-shield]][discord-url]
 
+[![Download from Modrinth][download-modrinth]][download-modrinth-url]
 [![Download from GitHub][download-github]][download-github-url]
 [![Download from SpigotMC][download-spigot]][download-spigot-url]
 
@@ -186,7 +187,9 @@ Project Link: [https://github.com/HappyAreaBean/SimpleJoinMessage](https://githu
 [discord-shield]: https://img.shields.io/discord/347679658369613826?color=darkblue&label=DISCORD&style=for-the-badge
 [discord-url]: https://go.happyareabean.cc/supportdiscord
 
-[download-spigot]: https://img.shields.io/badge/Download%20from-SpigotMC-ed8106?style=for-the-badge
+[download-modrinth]: https://media.happyareabean.cc/badges/available-on/modrinth.png
+[download-modrinth-url]: https://modrinth.com/plugin/sjm
+[download-spigot]: https://media.happyareabean.cc/badges/available-on/spigot.png
 [download-spigot-url]: https://www.spigotmc.org/resources/103413/
-[download-github]: https://img.shields.io/badge/Download%20from-github-181717?style=for-the-badge
+[download-github]: https://media.happyareabean.cc/badges/available-on/github.png
 [download-github-url]: https://github.com/HappyAreaBean/SimpleJoinMessage/releases
