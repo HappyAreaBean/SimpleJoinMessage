@@ -75,7 +75,7 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.24'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 
-    compileOnly 'me.clip:placeholderapi:2.11.1'
+    compileOnly 'me.clip:placeholderapi:2.11.6'
 
     implementation "net.kyori:adventure-api:4.17.0"
     implementation "net.kyori:adventure-text-minimessage:4.17.0"
