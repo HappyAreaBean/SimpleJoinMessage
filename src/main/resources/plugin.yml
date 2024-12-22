@@ -1,0 +1,6 @@
+name: SimpleJoinMessage
+main: cc.happyareabean.sjm.SimpleJoinMessage
+version: ${version}
+author: HappyAreaBean
+softDepend: [PlaceholderAPI]
+api-version: 1.13
