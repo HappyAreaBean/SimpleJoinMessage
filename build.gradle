@@ -1,3 +1,5 @@
+import com.oracle.svm.core.annotate.Inject
+
 import java.nio.file.Files
 
 plugins {
@@ -140,14 +142,24 @@ tasks.withType(xyz.jpenilla.runtask.task.AbstractRun) {
 }
 
 abstract class PrintSnapshotVersionTask extends DefaultTask {
+    // Store the project version as a property
+    @Input String projectVersion
+    @InputDirectory File buildDirectory
+
+    // Constructor to set the project version
+    PrintSnapshotVersionTask() {
+        this.projectVersion = project.version.toString()
+        this.buildDirectory = project.layout.buildDirectory.get().asFile
+    }
+
     @TaskAction
     def print() {
-        File versionsDir = project.file("$layout.buildDirectory/versions")
-        File textFile = project.file("$layout.buildDirectory/versions/snapshot.txt")
+        File versionsDir = new File(buildDirectory, "versions")
+        File textFile = new File(versionsDir, "snapshot.txt")
         versionsDir.mkdirs()
         Files.deleteIfExists(textFile.toPath())
         textFile.createNewFile()
-        textFile << "$project.version"
+        textFile.text = projectVersion // Use the stored project version
     }
 }
 
