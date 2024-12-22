@@ -19,7 +19,10 @@ java {
     targetCompatibility = JavaLanguageVersion.of(8)
 }
 
-compileJava.options.encoding = 'UTF-8'
+compileJava {
+    options.compilerArgs += ["-parameters"]
+    options.encoding = 'UTF-8'
+}
 
 repositories {
     mavenCentral()
