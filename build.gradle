@@ -140,14 +140,13 @@ tasks.withType(xyz.jpenilla.runtask.task.AbstractRun) {
 }
 
 abstract class PrintSnapshotVersionTask extends DefaultTask {
-    // Store the project version as a property
     @Input String projectVersion
-    @InputDirectory File buildDirectory
+    @Input String buildDirectory
 
     // Constructor to set the project version
     PrintSnapshotVersionTask() {
         this.projectVersion = project.version.toString()
-        this.buildDirectory = project.layout.buildDirectory.get().asFile
+        this.buildDirectory = project.layout.buildDirectory.get().asFile.toString()
     }
 
     @TaskAction
