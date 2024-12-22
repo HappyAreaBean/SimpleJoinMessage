@@ -3,6 +3,7 @@ package cc.happyareabean.sjm.commands;
 import cc.happyareabean.sjm.SimpleJoinMessage;
 import cc.happyareabean.sjm.config.SJMConfig;
 import cc.happyareabean.sjm.utils.AdventureWebEditorAPI;
+import cc.happyareabean.sjm.utils.CommandUtils;
 import cc.happyareabean.sjm.utils.Constants;
 import cc.happyareabean.sjm.utils.MessageUtil;
 import net.kyori.adventure.text.Component;
@@ -10,21 +11,19 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import revxrsal.commands.annotation.Command;
+import revxrsal.commands.annotation.CommandPlaceholder;
 import revxrsal.commands.annotation.Default;
-import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Description;
 import revxrsal.commands.annotation.Named;
+import revxrsal.commands.annotation.Range;
 import revxrsal.commands.annotation.Subcommand;
-import revxrsal.commands.bukkit.BukkitCommandActor;
+import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
-import revxrsal.commands.help.CommandHelp;
+import revxrsal.commands.help.Help;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
-import static cc.happyareabean.sjm.SimpleJoinMessage.LEGACY_SERIALIZER;
 import static cc.happyareabean.sjm.SimpleJoinMessage.MINIMESSAGE;
 import static net.kyori.adventure.text.Component.newline;
 import static net.kyori.adventure.text.Component.space;
@@ -36,22 +35,10 @@ import static net.kyori.adventure.text.event.ClickEvent.openUrl;
 @CommandPermission("sjm.admin")
 public class SJMCommand {
 
-	@DefaultFor({"~"})
+	@CommandPlaceholder
 	@Description("SimpleJoinMessage commands list")
-	public void help(BukkitCommandActor actor, CommandHelp<String> helpEntries, @Default("1") int page) {
-		List<Component> list = new ArrayList<>();
-		list.add(Constants.HEADER);
-		list.add(MINIMESSAGE.deserialize(String.format("<gradient:#f7ff00:#db36a4><b>SimpleJoinMessage</b></gradient> <white>%s</white>", Constants.VERSION))
-				.clickEvent(openUrl("https://go.happyareabean.cc/sjm"))
-				.hoverEvent(MINIMESSAGE.deserialize("<rainbow>click me!")));
-		list.add(text()
-				.content("By ")
-				.color(NamedTextColor.GRAY)
-				.append(text("HappyAreaBean", NamedTextColor.GREEN)).build());
-		list.add(Constants.HEADER);
-		helpEntries.paginate(page, 10).forEach(s -> list.add(LEGACY_SERIALIZER.deserialize(s)));
-		list.add(Constants.HEADER);
-		list.forEach(actor::reply);
+	public void help(BukkitCommandActor actor, @Range(min = 1) @Default("1") int page, Help.RelatedCommands<BukkitCommandActor> helpEntries) {
+		CommandUtils.handleHelpMenu(actor, page, helpEntries, 5, "sjm");
 	}
 
 	@Subcommand("reload")
@@ -69,14 +56,14 @@ public class SJMCommand {
 			actor.reply(Constants.PREFIX.append(text("The settings have been reloaded, but you're in console mode, so the message won't be sent.", NamedTextColor.RED)));
 			return;
 		}
-		MessageUtil.sendMessageDelay(actor.getAsPlayer(), SimpleJoinMessage.getInstance().getSJMConfig().getJoinMessage(), 0);
+		MessageUtil.sendMessageDelay(actor.asPlayer(), SimpleJoinMessage.getInstance().getSJMConfig().getJoinMessage(), 0);
 	}
 
 	@Subcommand({"show"})
 	@Description("Send a join message in your chat")
 	public void show(BukkitCommandActor actor) {
 		actor.requirePlayer();
-		MessageUtil.sendMessageDelay(actor.getAsPlayer(), SimpleJoinMessage.getInstance().getSJMConfig().getJoinMessage(), 0);
+		MessageUtil.sendMessageDelay(actor.asPlayer(), SimpleJoinMessage.getInstance().getSJMConfig().getJoinMessage(), 0);
 	}
 
 	@Subcommand({"editor"})

@@ -13,4 +13,7 @@ public class Constants {
 
 	public static final String VERSION = SimpleJoinMessage.getInstance().getDescription().getVersion();
 	public static final String USER_AGENT = "SimpleJoinMessage/" + VERSION;
+
+	public static final String HELP_COMMAND_FORMAT = "/sjm %s";
+	public static final String PAGE_TEXT = "Page %s";
 }

@@ -6,7 +6,6 @@ import cc.happyareabean.sjm.config.SJMMisc;
 import cc.happyareabean.sjm.listener.PlayerJoinListener;
 import cc.happyareabean.sjm.listener.UpdateNotifyListener;
 import cc.happyareabean.sjm.utils.AdventureWebEditorAPI;
-import cc.happyareabean.sjm.utils.Constants;
 import lombok.Getter;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -17,7 +16,10 @@ import org.bukkit.util.FileUtil;
 import org.inventivetalent.update.spiget.SpigetUpdate;
 import org.inventivetalent.update.spiget.UpdateCallback;
 import org.inventivetalent.update.spiget.comparator.VersionComparator;
-import revxrsal.commands.bukkit.BukkitCommandHandler;
+import revxrsal.commands.Lamp;
+import revxrsal.commands.bukkit.BukkitLamp;
+import revxrsal.commands.bukkit.BukkitLampConfig;
+import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 
 import java.io.File;
 import java.net.URI;
@@ -37,7 +39,7 @@ public class SimpleJoinMessage extends JavaPlugin {
 	@Getter public static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.legacy('&');
 	@Getter private static BukkitAudiences adventure;
 	@Getter private AdventureWebEditorAPI adventureWebEditorAPI;
-	@Getter private BukkitCommandHandler commandHandler;
+	@Getter private Lamp<BukkitCommandActor> commandHandler;
 	@Getter private SJMConfig SJMConfig;
 	@Getter private SJMMisc miscConfig;
 
@@ -55,21 +57,7 @@ public class SimpleJoinMessage extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new UpdateNotifyListener(), this);
 
 		getLogger().info("Registering commands...");
-		commandHandler = BukkitCommandHandler.create(this);
-		commandHandler.enableAdventure(adventure);
-		commandHandler.setMessagePrefix(LEGACY_SERIALIZER.serialize(Constants.PREFIX));
-		commandHandler.setHelpWriter((command, actor) -> {
-			StringBuilder sb = new StringBuilder();
-			sb.append("&8• &e/");
-			sb.append(command.getPath().toRealString());
-			if (!command.getUsage().isEmpty()) {
-				sb.append(" ");
-				sb.append(command.getUsage());
-			}
-			sb.append(" &7- &f");
-			sb.append(command.getDescription());
-			return sb.toString();
-		});
+		commandHandler = BukkitLamp.builder(BukkitLampConfig.builder(this).audiences(adventure).build()).build();
 		commandHandler.register(new SJMCommand());
 
 		adventureWebEditorAPI = new AdventureWebEditorAPI(URI.create(this.SJMConfig.getAdventureWebURL()));
