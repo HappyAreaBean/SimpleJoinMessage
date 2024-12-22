@@ -91,8 +91,9 @@ processResources {
     expand project.properties
 }
 
-def runDirectoryDir = project.hasProperty('runPaper.runDirectory') ? project.property('runPaper.runDirectory') : "${project.rootProject.projectDir}/working"
-def runServerJar = project.hasProperty('runPaper.serverJar') ? project.property('runPaper.serverJar') : null
+def SERV_DIR = System.getenv('SERV_DIR') != null ? System.getenv('SERV_DIR') : "${project.rootProject.projectDir}/working"
+def SERV_JAR = System.getenv('SERV_JAR') != null ? System.getenv('SERV_JAR') : null
+def SERV_VER = System.getenv('SERV_VER') != null ? System.getenv('SERV_VER') : mcVersion
 
 def libsPackage = group + ".sjm.libs"
 
@@ -101,10 +102,10 @@ tasks {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion(mcVersion)
-        if (runServerJar != null)
-            serverJar(runDirectory.file(runServerJar as String))
-        runDirectory.set(file(runDirectoryDir))
+        minecraftVersion(SERV_VER)
+        if (SERV_JAR != null)
+            serverJar(runDirectory.file(SERV_JAR as String))
+        runDirectory.set(file(SERV_DIR))
     }
     shadowJar {
         archiveClassifier.set('')
@@ -122,6 +123,16 @@ tasks {
         relocate("org.jetbrains.annotations", "${libsPackage}.annotations")
         relocate("kotlin", "${libsPackage}.kotlin")
     }
+}
+
+int SERV_JAVA = System.getenv("SERV_JAVA") == null ? 21 : System.getenv("SERV_JAVA") as int
+
+tasks.withType(xyz.jpenilla.runtask.task.AbstractRun) {
+    javaLauncher = javaToolchains.launcherFor {
+        vendor = JvmVendorSpec.JETBRAINS
+        languageVersion = JavaLanguageVersion.of(SERV_JAVA)
+    }
+    jvmArgs "-XX:+AllowEnhancedClassRedefinition"
 }
 
 abstract class PrintSnapshotVersionTask extends DefaultTask {
