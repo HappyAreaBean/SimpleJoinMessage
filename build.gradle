@@ -1,5 +1,3 @@
-import com.oracle.svm.core.annotate.Inject
-
 import java.nio.file.Files
 
 plugins {
