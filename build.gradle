@@ -91,7 +91,10 @@ dependencies {
 }
 
 processResources {
-    project.properties.put("version", project.version.toString().endsWith("-SNAPSHOT") ? fullVersion : project.version)
+    if (project.version.toString().endsWith("-SNAPSHOT"))
+        version = fullVersion
+
+    project.properties.put("pluginVersion", project.version)
     expand project.properties
 }
 
