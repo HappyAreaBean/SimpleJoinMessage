@@ -130,12 +130,12 @@ public class SimpleJoinMessage extends JavaPlugin {
 
 	public void checkSupportedPlugin() {
 		if (!isPAPISupported()) {
-			getLogger().warning("PlaceholderAPI is not enabled, you will not be able to use any placeholder from PlaceholderAPI.");
+			getLogger().warning("PlaceholderAPI not found, you will not be able to use any placeholder from PlaceholderAPI.");
 		}
 	}
 
 	public boolean isPAPISupported() {
-		return getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
+		return getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
 	}
 
 	public String regenerateSettings() {
