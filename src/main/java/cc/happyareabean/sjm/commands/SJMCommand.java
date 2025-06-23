@@ -45,7 +45,8 @@ public class SJMCommand {
 	@Description("Reload SimpleJoinMessage")
 	public void reload(BukkitCommandActor actor) {
 		SimpleJoinMessage.getInstance().getSJMConfig().reloadAndSave();
-		actor.reply(Constants.PREFIX.append(text("Settings reloaded.")));
+		SimpleJoinMessage.getInstance().loadCustomCommand(true);
+		actor.reply(Constants.PREFIX.append(text("Settings and commands reloaded.")));
 	}
 
 	@Subcommand({"reloadshow", "rs"})

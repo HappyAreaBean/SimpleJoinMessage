@@ -1,6 +1,8 @@
 package cc.happyareabean.sjm;
 
+import cc.happyareabean.sjm.commands.CustomShowCommand;
 import cc.happyareabean.sjm.commands.SJMCommand;
+import cc.happyareabean.sjm.config.SJMCommands;
 import cc.happyareabean.sjm.config.SJMConfig;
 import cc.happyareabean.sjm.config.SJMMisc;
 import cc.happyareabean.sjm.listener.PlayerJoinListener;
@@ -20,6 +22,7 @@ import revxrsal.commands.Lamp;
 import revxrsal.commands.bukkit.BukkitLamp;
 import revxrsal.commands.bukkit.BukkitLampConfig;
 import revxrsal.commands.bukkit.actor.BukkitCommandActor;
+import revxrsal.commands.orphan.Orphans;
 
 import java.io.File;
 import java.net.URI;
@@ -42,6 +45,7 @@ public class SimpleJoinMessage extends JavaPlugin {
 	@Getter private Lamp<BukkitCommandActor> commandHandler;
 	@Getter private SJMConfig SJMConfig;
 	@Getter private SJMMisc miscConfig;
+	@Getter private SJMCommands commandsConfig;
 
 	@Override
 	public void onEnable() {
@@ -51,6 +55,7 @@ public class SimpleJoinMessage extends JavaPlugin {
 		getLogger().info("Loading settings...");
 		SJMConfig = new SJMConfig(new File(getDataFolder(), "settings.yml").toPath());
 		miscConfig = new SJMMisc(new File(getDataFolder(), "misc.yml").toPath());
+		commandsConfig = new SJMCommands(new File(getDataFolder(), "commands.yml").toPath());
 
 		getLogger().info("Registering listener...");
 		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -59,6 +64,9 @@ public class SimpleJoinMessage extends JavaPlugin {
 		getLogger().info("Registering commands...");
 		commandHandler = BukkitLamp.builder(BukkitLampConfig.builder(this).audiences(adventure).build()).build();
 		commandHandler.register(new SJMCommand());
+
+		if (commandsConfig.getCustomShow().isEnabled())
+			loadCustomCommand(false);
 
 		adventureWebEditorAPI = new AdventureWebEditorAPI(URI.create(this.SJMConfig.getAdventureWebURL()));
 
@@ -140,5 +148,19 @@ public class SimpleJoinMessage extends JavaPlugin {
 			SJMConfig = new SJMConfig(path);
 		}
 		return backupFileName;
+	}
+
+	public void loadCustomCommand(boolean reload) {
+		String oldCustom = commandsConfig.getCustomShow().getCommand();
+		String newCustom;
+
+		if (reload) {
+			commandsConfig.reloadAndSave();
+			newCustom = commandsConfig.getCustomShow().getCommand();
+
+			if (newCustom.equals(oldCustom)) return;
+		}
+
+		commandHandler.register(commandHandler.register(Orphans.path(commandsConfig.getCustomShow().getCommand()).handler(new CustomShowCommand())));
 	}
 }
