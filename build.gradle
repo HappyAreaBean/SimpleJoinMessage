@@ -9,7 +9,7 @@ plugins {
 }
 
 group = 'cc.happyareabean'
-version = '1.1.9-SNAPSHOT'
+version = '1.1.9'
 
 def gitCommit = indraGit.commit().abbreviate(7).name()
 def fullVersion = "${project.version}-${gitCommit}"
