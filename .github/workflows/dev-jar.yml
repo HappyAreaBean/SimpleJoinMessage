@@ -26,7 +26,7 @@ jobs:
            echo "snapshotVersion=$(cat build/versions/snapshot.txt)" >> $GITHUB_ENV
            echo "artifactPath=$(pwd)/build/libs" >> $GITHUB_ENV
       - name: Upload Plugin jar
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: SimpleJoinMessage-${{ env.snapshotVersion }}-${{ env.git_hash }}.jar
           path: ${{ env.artifactPath }}/SimpleJoinMessage-${{ env.snapshotVersion }}.jar
