@@ -8,6 +8,10 @@ import cc.happyareabean.sjm.config.SJMMisc;
 import cc.happyareabean.sjm.listener.PlayerJoinListener;
 import cc.happyareabean.sjm.listener.UpdateNotifyListener;
 import cc.happyareabean.sjm.utils.AdventureWebEditorAPI;
+import cc.happyareabean.sjm.utils.Util;
+import cc.happyareabean.sjm.utils.message.AbstractMessageUtil;
+import cc.happyareabean.sjm.utils.message.impl.BukkitMessageUtil;
+import cc.happyareabean.sjm.utils.message.impl.PaperMessageUtil;
 import lombok.Getter;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -40,7 +44,7 @@ public class SimpleJoinMessage extends JavaPlugin {
 	@Getter private static SimpleJoinMessage instance;
 	@Getter public static final MiniMessage MINIMESSAGE = MiniMessage.miniMessage();
 	@Getter public static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.legacy('&');
-	@Getter private static BukkitAudiences adventure;
+	@Getter private static AbstractMessageUtil messageUtil;
 	@Getter private AdventureWebEditorAPI adventureWebEditorAPI;
 	@Getter private Lamp<BukkitCommandActor> commandHandler;
 	@Getter private SJMConfig SJMConfig;
@@ -50,7 +54,12 @@ public class SimpleJoinMessage extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		instance = this;
-		adventure = BukkitAudiences.create(this);
+
+		if (Util.isPaperAdventure()) {
+			messageUtil = new PaperMessageUtil(this);
+		} else {
+			messageUtil = new BukkitMessageUtil(this);
+		}
 
 		getLogger().info("Loading settings...");
 		SJMConfig = new SJMConfig(new File(getDataFolder(), "settings.yml").toPath());
@@ -62,7 +71,9 @@ public class SimpleJoinMessage extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new UpdateNotifyListener(), this);
 
 		getLogger().info("Registering commands...");
-		commandHandler = BukkitLamp.builder(BukkitLampConfig.builder(this).audiences(adventure).build()).build();
+		BukkitLampConfig.Builder<BukkitCommandActor> commandConfig = BukkitLampConfig.builder(this);
+		if (!Util.isPaperAdventure()) commandConfig.audiences(BukkitAudiences.create(this));
+		commandHandler = BukkitLamp.builder(commandConfig.build()).build();
 		commandHandler.register(new SJMCommand());
 
 		if (commandsConfig.getCustomShow().isEnabled())
