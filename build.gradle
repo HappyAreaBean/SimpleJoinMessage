@@ -56,6 +56,11 @@ repositories {
         url = "https://repo.fantasyrealms.net/other-snapshots"
     }
 
+    maven {
+        name = "fantasyrealmsDowngraded"
+        url = uri("https://repo.fantasyrealms.net/downgraded")
+    }
+
     maven { url = 'https://jitpack.io' }
 
     //Add your repositories here
@@ -69,7 +74,7 @@ ext {
 
 dependencies {
     //Adds the spigot api to your plugin
-    compileOnly "org.spigotmc:spigot-api:${mcVersion}-R0.1-SNAPSHOT"
+    compileOnly "io.papermc.paper.downgraded:paper-api:1.21.6-R0.1-SNAPSHOT"
 
     compileOnly 'me.clip:placeholderapi:2.11.6'
 
