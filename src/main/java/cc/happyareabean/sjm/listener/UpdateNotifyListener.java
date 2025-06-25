@@ -2,6 +2,7 @@ package cc.happyareabean.sjm.listener;
 
 import cc.happyareabean.sjm.SimpleJoinMessage;
 import cc.happyareabean.sjm.utils.Constants;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -24,7 +25,8 @@ public class UpdateNotifyListener implements Listener {
         if (!player.hasPermission("sjm.admin")) return;
         if (SimpleJoinMessage.NEXT_VERSION.isEmpty()) return;
 
-        SimpleJoinMessage.getMessageUtil().sendMessage(player, Component.textOfChildren(
+        Audience aPlayer = SimpleJoinMessage.getAdventure().player(player);
+        aPlayer.sendMessage(Component.textOfChildren(
                 Constants.PREFIX,
                 text("New version", WHITE),
                 space(),
