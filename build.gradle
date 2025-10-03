@@ -85,9 +85,9 @@ dependencies {
     implementation 'com.github.HappyAreaBean.Spiget-Update:bukkit:1.4.7-SNAPSHOT'
     implementation "com.squareup.okhttp3:okhttp:4.12.0"
 
-    implementation 'io.github.revxrsal:lamp.common:4.0.0-beta.24'
-    implementation 'io.github.revxrsal:lamp.bukkit:4.0.0-beta.24'
-    implementation 'io.github.revxrsal:lamp.brigadier:4.0.0-beta.24'
+    implementation 'io.github.revxrsal:lamp.common:4.0.0-rc.13'
+    implementation 'io.github.revxrsal:lamp.bukkit:4.0.0-rc.13'
+    implementation 'io.github.revxrsal:lamp.brigadier:4.0.0-rc.13'
 
     implementation("com.github.HappyAreaBean.ConfigLib:configlib-bukkit:v2.3.1")
 
