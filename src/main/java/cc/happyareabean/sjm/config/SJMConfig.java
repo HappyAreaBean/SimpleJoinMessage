@@ -83,7 +83,7 @@ public class SJMConfig extends YamlConfiguration {
 						" ",
 						"------------------------------------------------------------------------",
 						" ",
-						" All the Message format only supported MiniMessage, you can read more about format at: https://docs.advntr.dev/minimessage/format.html",
+						" All the Message format only supported MiniMessage, you can read more about format at: https://docs.papermc.io/adventure/minimessage/format/",
 						" MiniMessage also have web interface available: https://webui.advntr.dev/",
 						" ",
 						" PlaceholderAPI are also supported.",
